@@ -1,0 +1,90 @@
+services:
+  kong-database:
+    image: postgres:13
+    container_name: kong-database
+    environment:
+      POSTGRES_USER: kong
+      POSTGRES_DB: kong
+      POSTGRES_PASSWORD: kong
+    ports:
+      - "5432:5432"
+    restart: always
+
+  kong-migrations:
+    image: kong:3.5
+    container_name: kong-migrations
+    depends_on:
+      - kong-database
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_PASSWORD: kong
+      KONG_PASSWORD: kong_admin
+    command: kong migrations bootstrap
+    restart: on-failure
+
+  kong:
+    image: kong:3.5
+    container_name: kong
+    depends_on:
+      - kong-migrations
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_PASSWORD: kong
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+    ports:
+      - "8000:8000"   # Public traffic
+      - "8443:8443"   # Public traffic SSL
+      - "8001:8001"   # Admin API
+      - "8444:8444"   # Admin API SSL
+    restart: always
+
+  konga:
+    image: pantsel/konga:latest
+    container_name: konga
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "1337:1337"
+    depends_on:
+      - kong
+    restart: always
+
+  service1-web:
+    container_name: service1-web
+    hostname: service1-web
+    image: service1
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: service1/Dockerfile
+      args:
+        END: 'TEST'
+    volumes:
+      - "/tmp:/tmp"
+    ports:
+      - '8080:8080'
+      - '8009:8009'
+    restart: 'on-failure'
+
+  ubuntu-curl:
+    image: ubuntu:22.04
+    container_name: ubuntu-curl
+    command: [ "sleep", "infinity" ] # Keep container running
+    tty: true
+    stdin_open: true
+    ports:
+      - "2222:22"   # Optional SSH or connection port if needed
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "--version" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    entrypoint: [ "/bin/bash", "-c", "apt update && apt install -y curl && exec sleep infinity" ]

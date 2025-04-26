@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "9acdeafe-a9b3-415a-a912-f8c286b2b045",
+		"name": "Kong",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5074949"
+	},
+	"item": [
+		{
+			"name": "PublicTraffic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/service1-web/healthz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"service1-web",
+						"healthz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PublicTraffic Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/service1-web/healthz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"service1-web",
+						"healthz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[SSL] PublicTraffic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8443",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "[SSL] Admin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8444",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8444"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateService",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "service1",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "http://service1-web:8080",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRoute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "paths[]",
+							"value": "/service1-web/healthz",
+							"type": "text"
+						},
+						{
+							"key": "strip_path",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/service1/routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"service1",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRoutes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "paths[]",
+							"value": "/service1-web/healthz",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "strip_path",
+							"value": "false",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/service1/routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"service1",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
