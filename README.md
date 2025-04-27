@@ -34,3 +34,13 @@ kms
 curl -s localhost:8001 | \
   jq '.plugins.available_on_server."header-logger"'
 ```
+
+##### exit pongo shell
+````shell
+exit
+````
+
+##### run test
+````shell
+pongo run
+````
