@@ -11,7 +11,7 @@ services:
     restart: always
 
   kong-migrations:
-    image: kong:3.5
+    image: kong:latest
     container_name: kong-migrations
     depends_on:
       - kong-database
@@ -24,7 +24,7 @@ services:
     restart: on-failure
 
   kong:
-    image: kong:3.5
+    image: kong:latest
     container_name: kong
     depends_on:
       - kong-migrations
@@ -37,6 +37,9 @@ services:
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_ADMIN_ERROR_LOG: /dev/stderr
       KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+      KONG_PLUGINS: bundled,header-logger
+    volumes:
+      - ./kong/plugins/header-logger:/usr/local/share/lua/5.1/kong/plugins/header-logger
     ports:
       - "8000:8000"   # Public traffic
       - "8443:8443"   # Public traffic SSL
@@ -88,3 +91,6 @@ services:
       timeout: 10s
       retries: 5
     entrypoint: [ "/bin/bash", "-c", "apt update && apt install -y curl && exec sleep infinity" ]
+
+volumes:
+  kong-db-data: {}

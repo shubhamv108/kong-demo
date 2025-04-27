@@ -27,26 +27,6 @@
 			"response": []
 		},
 		{
-			"name": "PublicTraffic Copy",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/service1-web/healthz",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"service1-web",
-						"healthz"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "[SSL] PublicTraffic",
 			"request": {
 				"method": "GET",
@@ -193,6 +173,164 @@
 						"services",
 						"service1",
 						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateConsumer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "test-user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/consumers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"consumers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateConsumerKey",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/consumers/test-user/key-auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"consumers",
+						"test-user",
+						"key-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnablePlugin-RateLimit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "rate-limiting",
+							"type": "text"
+						},
+						{
+							"key": "config.minute",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "config.policy",
+							"value": "local",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/service1/plugins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"service1",
+						"plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnablePlugin-FileLogging",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "file-log",
+							"type": "text"
+						},
+						{
+							"key": "config.path",
+							"value": "/tmp/kong.log",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/service1/plugins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"service1",
+						"plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnablePlugin-CustomPlugin-HeaderLogger",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "header-logger",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/service1/plugins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"service1",
+						"plugins"
 					]
 				}
 			},

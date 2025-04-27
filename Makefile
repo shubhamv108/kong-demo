@@ -16,7 +16,7 @@ up:
 	docker compose -f $(COMPOSE_FILE) up -d
 
 down:
-	docker compose -f $(COMPOSE_FILE) down
+	docker compose -f $(COMPOSE_FILE) down --volumes
 
 clean:
 	docker rm -vf $$(docker ps -aq) || true
