@@ -315,7 +315,7 @@
 					"urlencoded": [
 						{
 							"key": "name",
-							"value": "header-logger",
+							"value": "header-filter-logger",
 							"type": "text"
 						}
 					]

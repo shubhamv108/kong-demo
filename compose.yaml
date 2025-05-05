@@ -37,9 +37,10 @@ services:
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_ADMIN_ERROR_LOG: /dev/stderr
       KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
-      KONG_PLUGINS: bundled,header-logger
+      KONG_PLUGINS: bundled,header-logger,header-filter-logger
     volumes:
       - ./kong/plugins/header-logger:/usr/local/share/lua/5.1/kong/plugins/header-logger
+      - ./kong/plugins/header-filter-logger:/usr/local/share/lua/5.1/kong/plugins/header-filter-logger
     ports:
       - "8000:8000"   # Public traffic
       - "8443:8443"   # Public traffic SSL

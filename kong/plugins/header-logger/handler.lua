@@ -15,7 +15,8 @@ end
 
 function HeaderLoggerHandler:response(conf)
     kong.response.set_header(conf.response_header_name, HeaderLoggerHandler.VERSION)
-     kong.log.info("[Response Headers]")
+    kong.response.set_header("X-COMMON_HEADER", "HeaderLoggerHandler")
+     kong.log.info("[HeaderLoggerHandler:response] Response headers")
      for k, v in pairs(kong.response.get_headers()) do
        kong.log.info(k .. ": " .. v)
      end
