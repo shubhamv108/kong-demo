@@ -3,3 +3,13 @@ variable "konnect_pat" {
   type        = string
   sensitive   = true
 }
+
+variable "control_plane_name" {
+  description = "Name of control plane"
+  type        = string
+}
+
+variable "region" {
+  description = "Name of control plane"
+  type        = string
+}
